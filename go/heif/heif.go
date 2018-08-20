@@ -690,6 +690,7 @@ func decodeConfig(r io.Reader) (image.Config, error) {
 }
 
 func init() {
+	image.RegisterFormat("heif", "\x00\x00\x00\x18\x66\x74\x79\x70", decodeImage, decodeConfig)
 	// Assume .heic images always start with "\x00\x00\x00\x1cftyp".
 	image.RegisterFormat("heif", "\x00\x00\x00\x1c\x66\x74\x79\x70", decodeImage, decodeConfig)
 }
