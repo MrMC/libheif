@@ -94,9 +94,9 @@ const (
 	ProgressStepLoadTile = C.heif_progress_step_load_tile
 )
 
-// --- HeifError
+// --- heifError
 
-type ErrorCode int
+type errorCode int
 
 const (
 	ErrorOk = C.heif_error_Ok
@@ -129,7 +129,7 @@ const (
 	// ErrorEncodingError = C.heif_error_Encoding_error
 )
 
-type ErrorSubcode int
+type errorSubcode int
 
 const (
 	// no further information available
@@ -251,13 +251,13 @@ const (
 	// SuberrorCannotWriteOutputData = C.heif_suberror_Cannot_write_output_data
 )
 
-type HeifError struct {
-	Code    ErrorCode
-	Subcode ErrorSubcode
+type heifError struct {
+	Code    errorCode
+	Subcode errorSubcode
 	Message string
 }
 
-func (e *HeifError) Error() string {
+func (e *heifError) Error() string {
 	return e.Message
 }
 
@@ -266,9 +266,9 @@ func convertHeifError(cerror C.struct_heif_error) error {
 		return nil
 	}
 
-	err := &HeifError{
-		Code:    ErrorCode(cerror.code),
-		Subcode: ErrorSubcode(cerror.subcode),
+	return &heifError{
+		Code:    errorCode(cerror.code),
+		Subcode: errorSubcode(cerror.subcode),
 		Message: C.GoString(cerror.message),
 	}
 	if err.Code == ErrorUnsupportedFiletype {
